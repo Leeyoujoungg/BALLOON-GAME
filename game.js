@@ -452,15 +452,6 @@
 
     drawWave(W, H * 0.45);
 
-    // 목표 높이 점선
-    const goalY = g.baseY - g.len;
-    ctx.setLineDash([6, 6]);
-    ctx.strokeStyle = '#cfcac0'; ctx.lineWidth = 2;
-    ctx.beginPath(); ctx.moveTo(g.baseX - 150, goalY); ctx.lineTo(g.baseX + 150, goalY); ctx.stroke();
-    ctx.setLineDash([]);
-    ctx.fillStyle = '#b5b0a5'; ctx.font = '12px sans-serif'; ctx.textAlign = 'left';
-    ctx.fillText('목표 100%', g.baseX + 156, goalY + 4);
-
     // 바닥
     ctx.strokeStyle = '#d8d3c8'; ctx.lineWidth = 2;
     ctx.beginPath(); ctx.moveTo(0, g.groundY); ctx.lineTo(W, g.groundY); ctx.stroke();
