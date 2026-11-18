@@ -1,0 +1,136 @@
+:root {
+  --bg: #f6f4ef;
+  --panel: #ffffff;
+  --ink: #1d1d1f;
+  --muted: #6b6b70;
+  --line: #e2dfd7;
+  --zone: #3fb36b;
+  --weak: #f2b134;
+  --high: #e5484d;
+  --pink: #ff8fa3;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Noto Sans KR", "Malgun Gothic", system-ui, sans-serif;
+}
+
+.wrap { max-width: 960px; margin: 0 auto; padding: 20px 16px 40px; }
+.hidden { display: none !important; }
+
+/* 제목 (정중앙 상단) */
+.title {
+  position: relative;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  margin-bottom: 4px;
+}
+.title h1 { margin: 0; font-size: 32px; letter-spacing: .12em; }
+
+/* ? 도움말 (호버/터치 시 설명) */
+.help { outline: none; }
+.help-icon {
+  display: flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; border-radius: 50%;
+  border: 2px solid var(--ink); font-weight: 700; font-size: 15px;
+  cursor: help; user-select: none;
+}
+.help-box {
+  position: absolute; top: 44px; left: 50%; transform: translateX(-50%);
+  width: 340px; max-width: 100%;
+  margin: 0; font-size: 14px; line-height: 1.6; text-align: center;
+  color: var(--ink);
+  background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .12);
+  padding: 12px 16px;
+  opacity: 0; visibility: hidden; transition: opacity .15s;
+  z-index: 10;
+}
+.help:hover .help-box,
+.help:focus .help-box,
+.help:focus-within .help-box { opacity: 1; visibility: visible; }
+
+/* 게임 영역 */
+.stage {
+  position: relative;
+  height: 500px;
+  overflow: hidden;
+}
+
+canvas { display: block; width: 100%; height: 100%; }
+
+/* 제목 아래 풍선 크기 */
+.size {
+  text-align: center; font-weight: 700; font-size: 22px;
+  font-variant-numeric: tabular-nums; margin-bottom: 4px;
+}
+
+/* 풍선 아래 게이지 */
+.meters {
+  position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%);
+  width: min(280px, 80%);
+  display: flex; flex-direction: column; gap: 6px;
+  pointer-events: none;
+}
+.meter-row { display: flex; align-items: center; gap: 8px; }
+.m-label { width: 20px; text-align: center; font-size: 14px; transition: opacity .1s; }
+
+.gauge {
+  position: relative; flex: 1; height: 14px;
+  border-radius: 7px; overflow: hidden; background: var(--line);
+}
+.zone { position: absolute; top: 0; bottom: 0; opacity: .3; }
+.z-weak { left: 0; background: var(--weak); }
+.z-ok { background: var(--zone); }
+.z-hot { background: var(--high); }
+.g-fill {
+  position: absolute; left: 0; top: 3px; bottom: 3px; width: 0;
+  border-radius: 4px; background: var(--weak);
+}
+
+.danger-bar { flex: 1; height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; }
+#dangerFill { height: 100%; width: 0; background: var(--high); }
+
+/* START / 결과 */
+.overlay {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
+  gap: 14px; padding-bottom: 12px;
+  pointer-events: none;
+}
+.overlay.result { justify-content: center; padding-bottom: 0; background: rgba(246, 244, 239, .55); }
+.overlay button, .overlay .card { pointer-events: auto; }
+
+.card {
+  min-width: 240px;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .1);
+  padding: 18px 24px; text-align: center;
+  animation: pop-in .25s ease-out;
+}
+@keyframes pop-in { from { transform: scale(.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.grade { font-size: 44px; font-weight: 800; letter-spacing: .06em; line-height: 1.1; }
+.g-PERFECT { color: var(--pink); }
+.g-GOOD { color: var(--zone); }
+.g-BAD { color: var(--high); }
+.card-sub { margin-top: 8px; font-size: 15px; color: var(--muted); font-weight: 700; }
+
+button {
+  font: inherit; font-weight: 700; font-size: 15px; letter-spacing: .1em;
+  padding: 8px 24px; border-radius: 999px; border: 0;
+  background: var(--ink); color: #fff; cursor: pointer;
+}
+button:hover { opacity: .85; }
+
+/* 하단: 설명 / 상태 안내 */
+.guide {
+  margin: 14px 0 0; min-height: 24px;
+  text-align: center; color: var(--muted); font-size: 16px; font-weight: 700;
+}
+
+@media (max-width: 640px) {
+  .stage { height: 420px; }
+}
